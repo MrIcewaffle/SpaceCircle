@@ -1,10 +1,5 @@
 ﻿using SpaceCircle.App.Game.Scenes;
 using SpaceCircle.App.Objects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SpaceCircle.App.Systems;
 
@@ -27,4 +22,3 @@ public class SceneManager
         ActiveScene.RunScene();
     }
 }
-

@@ -1,10 +1,5 @@
 ﻿using SpaceCircle.App.Objects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SpaceCircle.App.Game.Objects;
 
@@ -22,7 +17,7 @@ public class Box : GameObject
 
     public override bool IsVisible => _isVisible;
 
-    public Box(Vector2 position, Vector2 dimensions, Color color) 
+    public Box(Vector2 position, Vector2 dimensions, Color color)
     {
         _position = position;
         _dimensions = dimensions;
