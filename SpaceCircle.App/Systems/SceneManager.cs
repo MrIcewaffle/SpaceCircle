@@ -1,5 +1,5 @@
 ﻿using SpaceCircle.App.Game.Scenes;
-using SpaceCircle.App.Objects;
+using SpaceCircle.App.BaseObjects;
 
 namespace SpaceCircle.App.Systems;
 

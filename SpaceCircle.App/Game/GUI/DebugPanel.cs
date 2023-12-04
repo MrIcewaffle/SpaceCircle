@@ -1,29 +1,27 @@
-﻿using SpaceCircle.App.Objects;
+﻿using SpaceCircle.App.BaseObjects;
+using SpaceCircle.App.Systems;
 using System.Numerics;
 
 namespace SpaceCircle.App.Game.GUI;
 
-public class DebugPanel : GameObject
+public class DebugPanel
 {
-    public override bool IsActive => _isActive;
-
-    public override bool IsVisible => _isVisible;
-
-    public string SceneName;
-    public int SceneObjects;
-    public int ActiveSceneObjects;
+    private string SceneName;
+    private int Entities;
+    private int Components;
 
     private Rectangle basePanel;
     private string runtime;
     private string fps;
     private string deltaTime;
 
-    public DebugPanel()
+    public DebugPanel(string scene)
     {
+        SceneName = scene;
         basePanel = new Rectangle(0, 0, 300, 150);
     }
 
-    public override void Draw()
+    public void Draw()
     {
         DrawRectangleRec(basePanel, LIGHTGRAY);
         DrawRectangleLinesEx(basePanel, 1, GRAY);
@@ -40,17 +38,17 @@ public class DebugPanel : GameObject
         DrawText("Scene:", 10, 70, 10, BLACK);
         DrawText(SceneName, 110, 70, 10, BLACK);
 
-        DrawText("Objects in scene:", 10, 85, 10, BLACK);
-        DrawText(SceneObjects.ToString(), 110, 85, 10, BLACK);
+        DrawText("Entities:", 10, 85, 10, BLACK);
+        DrawText(Entities.ToString(), 110, 85, 10, BLACK);
 
-        DrawText("Active in scene:", 10, 100, 10, BLACK);
-        DrawText(ActiveSceneObjects.ToString(), 110, 100, 10, BLACK);
+        DrawText("Components:", 10, 100, 10, BLACK);
+        DrawText(Components.ToString(), 110, 100, 10, BLACK);
     }
 
-    public override void Update()
+    public void Update()
     {
-        if (!_isActive)
-            return;
+        Entities = SystemBase.EntityCount();
+        Components = SystemBase.ComponentCount();
         runtime = GetTime().ToString();
         fps = GetFPS().ToString();
         deltaTime = GetFrameTime().ToString();

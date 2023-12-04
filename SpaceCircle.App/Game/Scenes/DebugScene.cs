@@ -1,7 +1,8 @@
 ﻿using SpaceCircle.App.Game.GUI;
 using SpaceCircle.App.Game.Objects;
-using SpaceCircle.App.Objects;
+using SpaceCircle.App.BaseObjects;
 using System.Numerics;
+using SpaceCircle.App.Systems;
 
 namespace SpaceCircle.App.Game.Scenes;
 
@@ -9,13 +10,11 @@ public class DebugScene : Scene
 {
     public override bool Initialized => _initialized;
 
-    private Dictionary<Guid, GameObject> sceneObjects;
-    private DebugPanel debugPanel = new DebugPanel();
+    private DebugPanel debugPanel;
 
 
     public DebugScene()
     {
-        sceneObjects = new Dictionary<Guid, GameObject>();
     }
 
     public override void Dispose()
@@ -26,12 +25,11 @@ public class DebugScene : Scene
     public override void InitializeScene()
     {
 
-        debugPanel.SceneName = this.GetType().Name;
+        debugPanel = new DebugPanel(this.GetType().Name);
 
-        //sceneObjects.Add(Guid.NewGuid(), new Box(new Vector2(100, 100), new Vector2(20, 20), BLUE));
-        sceneObjects.Add(Guid.NewGuid(), new Planet(Vector2.Zero, 10, new Vector2(GetScreenWidth() / 2, GetScreenHeight() / 2), 100));
-        sceneObjects.Add(Guid.NewGuid(), new Planet(Vector2.Zero, 30, new Vector2(GetScreenWidth() / 2, GetScreenHeight() / 2), 200));
-        sceneObjects.Add(Guid.NewGuid(), new Planet(Vector2.Zero, 10, new Vector2(GetScreenWidth() / 2, GetScreenHeight() / 2), 300));
+        new Planet(new Vector2(GetScreenWidth() / 2, GetScreenHeight() / 2), 10, 100);
+        new Planet(new Vector2(GetScreenWidth() / 2, GetScreenHeight() / 2), 30, 200);
+        new Planet(new Vector2(GetScreenWidth() / 2, GetScreenHeight() / 2), 10, 300);
         _initialized = true;
     }
 
@@ -40,9 +38,8 @@ public class DebugScene : Scene
         BeginDrawing();
         ClearBackground(LIGHTGRAY);
 
-        debugPanel.SceneObjects = sceneObjects.Count();
-        debugPanel.ActiveSceneObjects = sceneObjects.Where(t => t.Value.IsActive == true).Count();
         debugPanel.Update();
+        SystemBase.Update();
 
         Update();
         EndDrawing();
@@ -50,7 +47,5 @@ public class DebugScene : Scene
 
     protected override void Update()
     {
-        foreach (GameObject gameObject in sceneObjects.Values)
-            gameObject.Update();
     }
 }

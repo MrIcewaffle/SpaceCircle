@@ -1,4 +1,4 @@
-﻿namespace SpaceCircle.App.Objects;
+﻿namespace SpaceCircle.App.BaseObjects;
 
 /// <summary>
 /// Base class for a scene.<br /><br />
