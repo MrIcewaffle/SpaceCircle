@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,4 +14,8 @@ public class Component
     public virtual void Update(float deltaTime) { }
 }
 
-public class DrawableComponent : Component { }
+public class DrawableComponent : Component 
+{
+    public Vector2 CameraPositionOffset = Vector2.Zero;
+    public bool FixedToScreen = false;
+}

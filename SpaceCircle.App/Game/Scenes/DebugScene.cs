@@ -25,24 +25,18 @@ public class DebugScene : Scene
     public override void InitializeScene()
     {
 
-        debugPanel = new DebugPanel(this.GetType().Name);
-
-        new Planet(new Vector2(GetScreenWidth() / 2, GetScreenHeight() / 2), 10, 100);
-        new Planet(new Vector2(GetScreenWidth() / 2, GetScreenHeight() / 2), 30, 200);
-        new Planet(new Vector2(GetScreenWidth() / 2, GetScreenHeight() / 2), 10, 300);
+        new DebugPanel(this.GetType().Name);
+        new PlayerCamera();
+        new Planet(Vector2.Zero, 10, 100);
+        new Planet(Vector2.Zero, 30, 200);
+        new Planet(Vector2.Zero, 10, 300);
         _initialized = true;
     }
 
     public override void RunScene()
     {
-        BeginDrawing();
-        ClearBackground(LIGHTGRAY);
-
-        debugPanel.Update();
-        SystemBase.Update();
-
         Update();
-        EndDrawing();
+        SystemBase.Update();
     }
 
     protected override void Update()

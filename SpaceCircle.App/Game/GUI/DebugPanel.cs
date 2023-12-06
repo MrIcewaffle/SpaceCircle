@@ -1,30 +1,41 @@
-﻿using SpaceCircle.App.BaseObjects;
-using SpaceCircle.App.Systems;
+﻿using SpaceCircle.App.Systems;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace SpaceCircle.App.Game.GUI;
 
-public class DebugPanel
+public class DebugPanel : Entity
 {
-    private string SceneName;
-    private int Entities;
-    private int Components;
+    private Transform2D? _transform;
+    private Rectangle _background;
+    private string sceneName = string.Empty;
+    private int entities;
+    private int components;
+    private string? runtime;
+    private string? fps;
 
-    private Rectangle basePanel;
-    private string runtime;
-    private string fps;
-    private string deltaTime;
 
-    public DebugPanel(string scene)
+    public DebugPanel(string sceneName)
     {
-        SceneName = scene;
-        basePanel = new Rectangle(0, 0, 300, 150);
+        _transform = new Transform2D();
+        _background = new Rectangle(0, 0, 300, 150);
+
+        AddComponent(_transform);
+        RegisterEntity(this);
     }
 
-    public void Draw()
+    public override void Update(float deltaTime)
     {
-        DrawRectangleRec(basePanel, LIGHTGRAY);
-        DrawRectangleLinesEx(basePanel, 1, GRAY);
+        entities = SystemBase.EntityCount();
+        components = SystemBase.ComponentCount();
+        runtime = GetTime().ToString();
+        fps = GetFPS().ToString();
+
+        DrawRectangleRec(_background, LIGHTGRAY);
 
         DrawText("Run duration(sec):", 10, 10, 10, BLACK);
         DrawText(runtime, 110, 10, 10, BLACK);
@@ -33,25 +44,15 @@ public class DebugPanel
         DrawText(fps, 110, 25, 10, BLACK);
 
         DrawText("ms/Frame:", 10, 40, 10, BLACK);
-        DrawText(deltaTime, 110, 40, 10, BLACK);
+        DrawText(deltaTime.ToString(), 110, 40, 10, BLACK);
 
         DrawText("Scene:", 10, 70, 10, BLACK);
-        DrawText(SceneName, 110, 70, 10, BLACK);
+        DrawText(sceneName, 110, 70, 10, BLACK);
 
         DrawText("Entities:", 10, 85, 10, BLACK);
-        DrawText(Entities.ToString(), 110, 85, 10, BLACK);
+        DrawText(entities.ToString(), 110, 85, 10, BLACK);
 
         DrawText("Components:", 10, 100, 10, BLACK);
-        DrawText(Components.ToString(), 110, 100, 10, BLACK);
-    }
-
-    public void Update()
-    {
-        Entities = SystemBase.EntityCount();
-        Components = SystemBase.ComponentCount();
-        runtime = GetTime().ToString();
-        fps = GetFPS().ToString();
-        deltaTime = GetFrameTime().ToString();
-        Draw();
+        DrawText(components.ToString(), 110, 100, 10, BLACK);
     }
 }

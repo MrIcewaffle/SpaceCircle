@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -51,7 +52,8 @@ public static class SystemBase
     private static void UpdateComponentsSystems(float deltaTime)
     {
         TransformSystem.Update(deltaTime);
-        DrawableSystem.Update(deltaTime);
+        DrawableSystem.Update(deltaTime, true);
+        CameraSystem.Update(deltaTime);
     }
 }
 
@@ -82,4 +84,35 @@ internal class ComponentSystem<T> where T : Component
 }
 
 internal class TransformSystem : ComponentSystem<Transform2D> { }
-internal class DrawableSystem : ComponentSystem<DrawableComponent> { }
+internal class DrawableSystem : ComponentSystem<DrawableComponent> 
+{
+    public static new void Update(float deltaTime, bool updateFixed = true, Vector2? cameraPosition = null)
+    {
+        foreach (var component in Components)
+        {
+            if (!updateFixed && !component.FixedToScreen)
+            {
+                if (cameraPosition == null)
+                    cameraPosition = Vector2.Zero;
+
+                component.CameraPositionOffset = (Vector2)cameraPosition;
+                component.Update(deltaTime);
+            }
+            if (updateFixed && component.FixedToScreen)
+                component.Update(deltaTime);
+        }
+    }
+}
+internal class CameraSystem : ComponentSystem<CameraComponent> 
+{
+    public static new void Update(float deltaTime)
+    {
+        foreach (var component in Components)
+        {
+            BeginMode2D(component.Camera);
+            component.Update(deltaTime);
+            DrawableSystem.Update(deltaTime, false, component.Camera.target);
+            EndMode2D();
+        }
+    }
+}

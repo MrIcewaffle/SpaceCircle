@@ -19,6 +19,11 @@ public class SceneManager
         if (!ActiveScene.Initialized)
             ActiveScene.InitializeScene();
 
+        BeginDrawing();
+        ClearBackground(LIGHTGRAY);
+
         ActiveScene.RunScene();
+
+        EndDrawing();
     }
 }
