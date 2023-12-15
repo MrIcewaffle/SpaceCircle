@@ -11,7 +11,7 @@ namespace SpaceCircle.App.Components;
 public class Panel : DrawableComponent
 {
     public Vector2 Size = Vector2.Zero;
-    public Color Color = WHITE;
+    public Color Color = Color.WHITE;
 
     public Panel(Vector2? size = null, Color? color = null)
     {

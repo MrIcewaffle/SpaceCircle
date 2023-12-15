@@ -111,7 +111,7 @@ internal class CameraSystem : ComponentSystem<CameraComponent>
         {
             BeginMode2D(component.Camera);
             component.Update(deltaTime);
-            DrawableSystem.Update(deltaTime, false, component.Camera.target);
+            DrawableSystem.Update(deltaTime, false, component.Camera.Target);
             EndMode2D();
         }
     }

@@ -20,7 +20,7 @@ public class SceneManager
             ActiveScene.InitializeScene();
 
         BeginDrawing();
-        ClearBackground(LIGHTGRAY);
+        ClearBackground(Color.LIGHTGRAY);
 
         ActiveScene.RunScene();
 

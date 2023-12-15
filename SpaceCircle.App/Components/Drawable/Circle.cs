@@ -11,7 +11,7 @@ namespace SpaceCircle.App.Components;
 public class Circle : DrawableComponent
 {
     public float Radius = 0.0f;
-    public Color Color = WHITE;
+    public Color Color = Color.WHITE;
 
     public Circle(float? radius = null, Color? color = null) 
     {
