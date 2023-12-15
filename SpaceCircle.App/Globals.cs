@@ -1,12 +1,7 @@
-﻿global using static ZeroElectric.Vinculum.Raylib;
-global using static ZeroElectric.Vinculum.RayMath;
-global using static ZeroElectric.Vinculum.RayCamera;
-global using static ZeroElectric.Vinculum.RayGui;
-global using static ZeroElectric.Vinculum.RlGl;
-global using ZeroElectric.Vinculum;
+﻿global using static Raylib_cs.Raylib;
+global using static Raylib_cs.Raymath;
+global using Raylib_cs;
 global using SpaceCircle.App.BaseObjects;
 global using SpaceCircle.App.Components;
 
-global using Camera = ZeroElectric.Vinculum.Camera2D;
-global using RenderTexture2D = ZeroElectric.Vinculum.RenderTexture;
-global using Texture2D = ZeroElectric.Vinculum.Texture;
+global using Camera = Raylib_cs.Camera2D;

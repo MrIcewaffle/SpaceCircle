@@ -30,7 +30,7 @@ public class Planet : Entity
         else
             _transform = new Transform2D();
 
-        _sprite = new Circle(_diameter / 2, BLUE);
+        _sprite = new Circle(_diameter / 2, Color.BLUE);
 
         AddComponent(_sprite);
         AddComponent(_transform);

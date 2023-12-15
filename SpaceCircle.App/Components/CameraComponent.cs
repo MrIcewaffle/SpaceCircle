@@ -11,7 +11,7 @@ namespace SpaceCircle.App.Components
     public class CameraComponent : Component
     {
         public Vector2 Offset = Vector2.Zero;
-        public Camera2D Camera = new Camera2D();
+        public Camera Camera = new Camera();
         public float Zoom = 1f;
 
         public CameraComponent(Vector2? offset = null, float? zoom = null)
@@ -26,10 +26,10 @@ namespace SpaceCircle.App.Components
         public override void Update(float deltaTime)
         {
             Transform2D transform = entity.GetComponent<Transform2D>();
-            Camera.target = transform.Position;
-            Camera.rotation = transform.Rotation;
-            Camera.offset = Offset;
-            Camera.zoom = Zoom;
+            Camera.Target = transform.Position;
+            Camera.Rotation = transform.Rotation;
+            Camera.Offset = Offset;
+            Camera.Zoom = Zoom;
         }
     }
 }

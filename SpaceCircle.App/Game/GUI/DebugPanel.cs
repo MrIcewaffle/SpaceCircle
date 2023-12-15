@@ -35,24 +35,24 @@ public class DebugPanel : Entity
         runtime = GetTime().ToString();
         fps = GetFPS().ToString();
 
-        DrawRectangleRec(_background, LIGHTGRAY);
+        DrawRectangleRec(_background, Color.LIGHTGRAY);
 
-        DrawText("Run duration(sec):", 10, 10, 10, BLACK);
-        DrawText(runtime, 110, 10, 10, BLACK);
+        DrawText("Run duration(sec):", 10, 10, 10, Color.BLACK);
+        DrawText(runtime, 110, 10, 10, Color.BLACK);
 
-        DrawText("Frames/sec:", 10, 25, 10, BLACK);
-        DrawText(fps, 110, 25, 10, BLACK);
+        DrawText("Frames/sec:", 10, 25, 10, Color.BLACK);
+        DrawText(fps, 110, 25, 10, Color.BLACK);
 
-        DrawText("ms/Frame:", 10, 40, 10, BLACK);
-        DrawText(deltaTime.ToString(), 110, 40, 10, BLACK);
+        DrawText("ms/Frame:", 10, 40, 10, Color.BLACK);
+        DrawText(deltaTime.ToString(), 110, 40, 10, Color.BLACK);
 
-        DrawText("Scene:", 10, 70, 10, BLACK);
-        DrawText(sceneName, 110, 70, 10, BLACK);
+        DrawText("Scene:", 10, 70, 10, Color.BLACK);
+        DrawText(sceneName, 110, 70, 10, Color.BLACK);
 
-        DrawText("Entities:", 10, 85, 10, BLACK);
-        DrawText(entities.ToString(), 110, 85, 10, BLACK);
+        DrawText("Entities:", 10, 85, 10, Color.BLACK);
+        DrawText(entities.ToString(), 110, 85, 10, Color.BLACK);
 
-        DrawText("Components:", 10, 100, 10, BLACK);
-        DrawText(components.ToString(), 110, 100, 10, BLACK);
+        DrawText("Components:", 10, 100, 10, Color.BLACK);
+        DrawText(components.ToString(), 110, 100, 10, Color.BLACK);
     }
 }

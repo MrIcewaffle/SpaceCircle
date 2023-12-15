@@ -10,7 +10,7 @@ internal class Program
     {
         InitWindow(1280, 720, "SpaceCircles");
         SetTargetFPS(60);
-        GuiLoadStyleDefault();
+        //GuiLoadStyleDefault();
 
         Console.WriteLine("Starting SceneManger");
         _sceneManager = new SceneManager();
