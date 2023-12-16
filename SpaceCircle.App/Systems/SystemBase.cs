@@ -33,6 +33,14 @@ public static class SystemBase
         return count;
     }
 
+    public static Entity? GetEntity(Guid entityId)
+    {
+        if (Entities.ContainsKey(entityId))
+            return Entities[entityId];
+        else
+            return null;
+    }
+
     private static void RemoveEntity(Guid entityId)
     {
         Entities.Remove(entityId);
@@ -44,15 +52,18 @@ public static class SystemBase
         UpdateEntities(deltaTime);
         UpdateComponentsSystems(deltaTime);
     }
+
     private static void UpdateEntities(float deltaTime)
     {
         foreach (var entity in Entities.Values)
             entity.Update(deltaTime);
     }
+
     private static void UpdateComponentsSystems(float deltaTime)
     {
         TransformSystem.Update(deltaTime);
         DrawableSystem.Update(deltaTime, true);
+        GenericComponentSystem.Update(deltaTime);
         CameraSystem.Update(deltaTime);
     }
 }
@@ -82,14 +93,18 @@ internal class ComponentSystem<T> where T : Component
             component.Update(deltaTime);
     }
 }
-
+internal class GenericComponentSystem : ComponentSystem<Component> { }
 internal class TransformSystem : ComponentSystem<Transform2D> { }
 internal class DrawableSystem : ComponentSystem<DrawableComponent> 
 {
     public static new void Update(float deltaTime, bool updateFixed = true, Vector2? cameraPosition = null)
     {
+        //FIXME:This decouples the draw position from the entities position transform. Fix
         foreach (var component in Components)
         {
+            if (!component.Visible)
+                continue;
+
             if (!updateFixed && !component.FixedToScreen)
             {
                 if (cameraPosition == null)

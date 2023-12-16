@@ -11,45 +11,55 @@ namespace SpaceCircle.App.Game.Objects;
 public class Planet : Entity
 {
     private Transform2D _transform;
-    private Vector2 _orbitCenter;
-    private float _diameter;
-    private float _orbitRadius;
-    private float _orbitalAngle;
+    private PlanetDetailsComponent _detailsComponent;
+    //private Vector2 _orbitCenter;
+    //private float _diameter;
+    //private float _orbitRadius;
+    //private float _orbitalAngle;
 
     private Circle _sprite;
 
     public Planet(Vector2 orbitCenter, float diameter, float orbitRadius, Transform2D? transform = null)
     {
-        _diameter = diameter;
-        _orbitCenter = orbitCenter;
-        _orbitRadius = orbitRadius;
-        _orbitalAngle = 0f;
+        _detailsComponent = new();
+
+        _detailsComponent.PlanetStruct.Diameter = diameter;
+        _detailsComponent.PlanetStruct.OrbitCenter = orbitCenter;
+        _detailsComponent.PlanetStruct.OrbitRadius = orbitRadius;
+        _detailsComponent.PlanetStruct.OrbitalAngle = 0f;
 
         if (transform != null)
             _transform = transform;
         else
             _transform = new Transform2D();
 
-        _sprite = new Circle(_diameter / 2, Color.BLUE);
+        _sprite = new Circle(_detailsComponent.PlanetStruct.Diameter / 2, Color.BLUE);
 
         AddComponent(_sprite);
         AddComponent(_transform);
+        AddComponent(_detailsComponent);
         RegisterEntity(this);
     }
 
     public override void Update(float deltaTime)
     {
-        if (!IsActive)
-            return;
+        if (!IsActive)//TODO:Move to base method
+            return;   //
 
-        var f = _orbitRadius / 10;
+        UpdatePosition(deltaTime);
 
-        _orbitalAngle += 12 * deltaTime / f;
-        if (_orbitalAngle >= 360f)
-            _orbitalAngle += -360f;
+    }
 
-        float x = _orbitCenter.X + (float)(_orbitRadius * Math.Cos(_orbitalAngle));
-        float y = _orbitCenter.Y + (float)(_orbitRadius * Math.Sin(_orbitalAngle));
+    private void UpdatePosition(float deltaTime) 
+    {
+        var f = _detailsComponent.PlanetStruct.OrbitRadius / 10;
+
+        _detailsComponent.PlanetStruct.OrbitalAngle += 12 * deltaTime / f;
+        if (_detailsComponent.PlanetStruct.OrbitalAngle >= 360f)
+            _detailsComponent.PlanetStruct.OrbitalAngle += -360f;
+
+        float x = _detailsComponent.PlanetStruct.OrbitCenter.X + (float)(_detailsComponent.PlanetStruct.OrbitRadius * Math.Cos(_detailsComponent.PlanetStruct.OrbitalAngle));
+        float y = _detailsComponent.PlanetStruct.OrbitCenter.Y + (float)(_detailsComponent.PlanetStruct.OrbitRadius * Math.Sin(_detailsComponent.PlanetStruct.OrbitalAngle));
 
         _transform.Position.X = x;
         _transform.Position.Y = y;

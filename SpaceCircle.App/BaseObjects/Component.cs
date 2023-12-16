@@ -16,6 +16,7 @@ public class Component
 
 public class DrawableComponent : Component 
 {
+    public bool Visible = true;
     public Vector2 CameraPositionOffset = Vector2.Zero;
     public bool FixedToScreen = false;
 }

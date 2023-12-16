@@ -11,12 +11,12 @@ public class PlayerCamera : Entity
 {
     private Transform2D _transform;
     private CameraComponent _camera;
-    private Vector2 _startPosition = new Vector2(GetScreenWidth() / 2, GetScreenHeight() / 2);
+    private Vector2 _offset = new Vector2(GetScreenWidth() / 2, GetScreenHeight() / 2);
 
     public PlayerCamera() 
     {
         _transform = new Transform2D();
-        _camera = new CameraComponent(_startPosition);
+        _camera = new CameraComponent(_offset);
 
         AddComponent(_transform);
         AddComponent(_camera);

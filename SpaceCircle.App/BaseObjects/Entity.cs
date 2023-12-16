@@ -16,6 +16,7 @@ public class Entity
     public bool IsVisible = true;
 
     public virtual void Update(float deltaTime) { }
+    public virtual void Destroy() { }
 
     public void RegisterEntity(Entity entity)
     {
