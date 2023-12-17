@@ -26,7 +26,6 @@ public class Circle : DrawableComponent
     public override void Update(float deltaTime)
     {
         Transform2D transform = entity.GetComponent<Transform2D>();
-        Vector2 position = Vector2Add(transform.Position, CameraPositionOffset);
         DrawCircleV(transform.Position, Radius, Color);
     }
 }

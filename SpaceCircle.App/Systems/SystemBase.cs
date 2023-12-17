@@ -97,9 +97,9 @@ internal class GenericComponentSystem : ComponentSystem<Component> { }
 internal class TransformSystem : ComponentSystem<Transform2D> { }
 internal class DrawableSystem : ComponentSystem<DrawableComponent> 
 {
-    public static new void Update(float deltaTime, bool updateFixed = true, Vector2? cameraPosition = null)
+    public static new void Update(float deltaTime, bool updateFixed = true)
     {
-        //FIXME:This decouples the draw position from the entities position transform. Fix
+        //LATER:Confirm offset issue is fixed
         foreach (var component in Components)
         {
             if (!component.Visible)
@@ -107,10 +107,6 @@ internal class DrawableSystem : ComponentSystem<DrawableComponent>
 
             if (!updateFixed && !component.FixedToScreen)
             {
-                if (cameraPosition == null)
-                    cameraPosition = Vector2.Zero;
-
-                component.CameraPositionOffset = (Vector2)cameraPosition;
                 component.Update(deltaTime);
             }
             if (updateFixed && component.FixedToScreen)
@@ -126,7 +122,7 @@ internal class CameraSystem : ComponentSystem<CameraComponent>
         {
             BeginMode2D(component.Camera);
             component.Update(deltaTime);
-            DrawableSystem.Update(deltaTime, false, component.Camera.Target);
+            DrawableSystem.Update(deltaTime, false);
             EndMode2D();
         }
     }
