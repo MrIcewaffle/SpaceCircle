@@ -54,7 +54,7 @@ public class Planet : Entity
     {
         var f = _detailsComponent.PlanetStruct.OrbitRadius / 10;
 
-        _detailsComponent.PlanetStruct.OrbitalAngle += 12 * deltaTime / f;
+        _detailsComponent.PlanetStruct.OrbitalAngle += (6 * deltaTime) / f; //FIXME:Position resets at a certain points, causing object to jump positions.
         if (_detailsComponent.PlanetStruct.OrbitalAngle >= 360f)
             _detailsComponent.PlanetStruct.OrbitalAngle += -360f;
 
