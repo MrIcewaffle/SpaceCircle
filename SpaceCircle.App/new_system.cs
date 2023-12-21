@@ -35,6 +35,15 @@ public static class SceneSystem
     { 
         //Transform2DSystem.Update(delta)
     }
+
+    public static void UnregisterEntity(Guid Id)
+    {
+        Entities.Remove(Id);
+    }
+    public static void UnregisterEntity(newEntity entity)
+    {
+        UnregisterEntity(entity.Id);
+    }
 }
 
 public class newEntity
@@ -43,7 +52,14 @@ public class newEntity
     public Dictionary<Type, object> Components = new();
 
     public virtual void Update(float deltaTime) { }
-    public virtual void Destroy() { }
+    public void Destroy() 
+    {
+        foreach (var component in Components.Values)
+            HelperFunctions.UnregisterComponentFromManager(component);
+        
+        Components.Clear();
+        SceneSystem.UnregisterEntity(Id);
+    }
 
     public void RegisterEntity(newEntity entity)
     {
@@ -53,42 +69,58 @@ public class newEntity
     public void AddComponent(object component)
     {
         Components[component.GetType()] = (component);
+        HelperFunctions.RegisterComponentToManager(component);
     }
 
-    public void RemoveComponent(object component) { }
+    public void RemoveComponent(object component)
+    {
+        Components.Remove(component.GetType());
+        HelperFunctions.UnregisterComponentFromManager(component);
+    }
 
     public bool HasComponent(Type componentType)
     { 
         return Components.ContainsKey(componentType);
     }
 
-    public bool HasComponent<T>() where T : struct
+    public bool HasComponent<T>() where T : class
     {
         return Components.ContainsKey(typeof(T));
     }
 
-    public T GetComponent<T>() where T : struct
+    public T GetComponent<T>() where T : class
     { 
         return (T)Components[typeof(T)];
     }
+}
 
-    private void RegisterComponentToManager(object component)
-    { 
-        var componentType = component.GetType();
-
-        switch (componentType)
+public static class HelperFunctions
+{
+    public static void RegisterComponentToManager(object component)
+    { //TODO: this is kinda gross and could get unwieldy?
+        switch (component)
         {
-            //case Transform2DComponent t2D:
-            //    break;
-            //default:
-            //    break;
-        }
+            case Transform2DComponent t1:
+                Transform2DSystem.Register(t1);
+                break;
+        }   
     }
+
+    public static void UnregisterComponentFromManager(object component)
+    {
+        switch (component)
+        {
+            case Transform2DComponent t1:
+                Transform2DSystem.Unregister(t1);
+                break;
+        }   
+    }
+
 }
 
 public class Transform2DSystem : ComponentManager<Transform2DComponent> { }
 
-public class ComponentManager<T> where T : struct
+public class ComponentManager<T> where T : class
 {
     public static List<T> Components = new List<T>();
     public static int ComponentCount()
@@ -107,7 +139,7 @@ public class ComponentManager<T> where T : struct
     }
 }
 
-public struct Transform2DComponent
+public class Transform2DComponent
 {
     public Vector2 Position;
     public float Rotation;
