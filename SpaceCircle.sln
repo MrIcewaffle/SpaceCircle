@@ -5,7 +5,9 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpaceCircle.App", "SpaceCircle.App\SpaceCircle.App.csproj", "{BB780502-F1CE-4370-9576-319D1E6FE047}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpaceCircle.Tests", "SpaceCircle.Tests\SpaceCircle.Tests.csproj", "{33D0E0B1-87C1-4806-8841-633E6B417CB3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpaceCircle.Tests", "SpaceCircle.Tests\SpaceCircle.Tests.csproj", "{33D0E0B1-87C1-4806-8841-633E6B417CB3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpaceCircle.Visual.Tests", "SpaceCircle.Visual.Tests\SpaceCircle.Visual.Tests.csproj", "{840FAEBF-589A-4FD2-80C5-E670ABCBDB7E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{33D0E0B1-87C1-4806-8841-633E6B417CB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{33D0E0B1-87C1-4806-8841-633E6B417CB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{33D0E0B1-87C1-4806-8841-633E6B417CB3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{840FAEBF-589A-4FD2-80C5-E670ABCBDB7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{840FAEBF-589A-4FD2-80C5-E670ABCBDB7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{840FAEBF-589A-4FD2-80C5-E670ABCBDB7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{840FAEBF-589A-4FD2-80C5-E670ABCBDB7E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

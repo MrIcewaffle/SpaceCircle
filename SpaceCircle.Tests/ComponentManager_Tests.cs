@@ -1,6 +1,3 @@
-using SpaceCircle.App;
-using SpaceCircle.App.Systems;
-
 namespace SpaceCircle.Tests;
 
 [Collection("Sequential")]
@@ -9,29 +6,28 @@ public class ComponentManager_Tests : IDisposable
     public ComponentManager_Tests() 
     {
         var entity = new newEntity();
-        entity.AddComponent(new Transform2DComponent());
+        var c1 = new Transform2DComponent();
+        entity.AddComponent(c1.Id, c1);
         entity.RegisterEntity(entity);
     }
 
     [Fact]
     public void ComponentManager_Contains_Component()
     {
-        //TODO:failing until component registration in Entity.AddComponent() is added
-        Assert.Single(Transform2DSystem.Components);
+        Assert.Single(Transform2DManager.Components);
     }
 
     [Fact]
     public void ComponentManager_Component_Matches_Entity_Component()
     {
-        //TODO:failing until component registration in Entity.AddComponent() is added
         var entity = SceneSystem.Entities.First().Value;
 
         Assert.NotNull(entity);
         Assert.Single(entity.Components);
-        Assert.Single(Transform2DSystem.Components);
+        Assert.Single(Transform2DManager.Components);
 
         var entity_component = (Transform2DComponent)entity.Components.First().Value;
-        var manager_component = Transform2DSystem.Components.First();
+        var manager_component = Transform2DManager.Components.First();
 
         Assert.Equal(entity_component, manager_component);
     }
@@ -48,24 +44,23 @@ public class ComponentManager_Tests : IDisposable
     [Fact]
     public void ComponentManager_Unregister()
     { 
-        //TODO:failing until component registration in Entity.AddComponent() is added
         var entity = new newEntity();
         var c2 = new Transform2DComponent() { Rotation = 5.0f };
-        entity.AddComponent(c2);
+        entity.AddComponent(c2.Id, c2);
 
-        Assert.Equal(2, Transform2DSystem.Components.Count());
+        Assert.Equal(2, Transform2DManager.Components.Count());
 
-        Transform2DSystem.Unregister(c2);
-        Assert.Single(Transform2DSystem.Components);
+        Transform2DManager.Unregister(c2);
+        Assert.Single(Transform2DManager.Components);
 
-        var c1 = Transform2DSystem.Components.First();
+        var c1 = Transform2DManager.Components.First();
         Assert.Equal(0.0f, c1.Rotation);
     }
 
     public void Dispose()
     {
         SceneSystem.Entities.Clear();
-        Transform2DSystem.Components.Clear();
+        Transform2DManager.Components.Clear();
         TestComponentManager.Components.Clear();
     }
 }
@@ -77,7 +72,7 @@ internal class TestEntity : newEntity
     public TestEntity()
     {
         _transform = new Transform2DComponent();
-        AddComponent(_transform);
+        AddComponent(_transform.Id, _transform);
         RegisterEntity(this);
     }
 

@@ -1,6 +1,3 @@
-using SpaceCircle.App;
-using SpaceCircle.App.Systems;
-
 namespace SpaceCircle.Tests;
 
 [Collection("Sequential")]
@@ -71,12 +68,12 @@ public class SceneSystem_Tests : IDisposable
         SceneSystem.CleanScene();
 
         Assert.Empty(SceneSystem.Entities);
-        Assert.Empty(Transform2DSystem.Components);
+        Assert.Empty(Transform2DManager.Components);
     }
 
     public void Dispose()
     {
         SceneSystem.Entities.Clear();
-        Transform2DSystem.Components.Clear();
+        Transform2DManager.Components.Clear();
     }
 }

@@ -37,3 +37,8 @@ public abstract class Scene
     /// </summary>
     protected abstract void Update();
 }
+
+public class newScene
+{
+    public virtual void Initialise() { }
+}

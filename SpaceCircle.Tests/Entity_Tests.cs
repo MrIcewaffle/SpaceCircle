@@ -1,6 +1,3 @@
-using SpaceCircle.App;
-using SpaceCircle.App.Systems;
-
 namespace SpaceCircle.Tests;
 
 [Collection("Sequential")]
@@ -27,7 +24,7 @@ public class Entity_Tests : IDisposable
 
         Assert.Empty(entity.Components);
         Assert.Empty(SceneSystem.Entities);
-        Assert.Empty(Transform2DSystem.Components);
+        Assert.Empty(Transform2DManager.Components);
     }
 
     [Fact]
@@ -44,10 +41,11 @@ public class Entity_Tests : IDisposable
     public void AddComponent()
     {
         var entity = new newEntity();
-        entity.AddComponent(new Transform2DComponent());
+        var c1 = new Transform2DComponent();
+        entity.AddComponent(c1.Id, c1);
 
         Assert.Single(entity.Components);
-        Assert.Single(Transform2DSystem.Components);
+        Assert.Single(Transform2DManager.Components);
     }
 
     [Fact]
@@ -56,21 +54,22 @@ public class Entity_Tests : IDisposable
         var entity = new newEntity();
         var c1 = new Transform2DComponent();
 
-        entity.AddComponent(c1);
+        entity.AddComponent(c1.Id, c1);
         Assert.Single(entity.Components);
-        Assert.Single(Transform2DSystem.Components);
+        Assert.Single(Transform2DManager.Components);
 
         entity.RemoveComponent(c1);
 
         Assert.Empty(entity.Components);
-        Assert.Empty(Transform2DSystem.Components);
+        Assert.Empty(Transform2DManager.Components);
     }
 
     [Fact]
     public void HasComponent_True()
     {
         var entity = new newEntity();
-        entity.AddComponent(new Transform2DComponent());
+        var c1 = new Transform2DComponent();
+        entity.AddComponent(c1.Id, c1);
 
         Assert.True(entity.HasComponent(typeof(Transform2DComponent)));
     }
@@ -79,7 +78,8 @@ public class Entity_Tests : IDisposable
     public void HasComponent_Type_True()
     {
         var entity = new newEntity();
-        entity.AddComponent(new Transform2DComponent());
+        var c1 = new Transform2DComponent();
+        entity.AddComponent(c1.Id, c1);
 
         Assert.True(entity.HasComponent<Transform2DComponent>());
     }
@@ -88,7 +88,8 @@ public class Entity_Tests : IDisposable
     public void HasComponent_False()
     {
         var entity = new newEntity();
-        entity.AddComponent(new Transform2DComponent());
+        var c1 = new Transform2DComponent();
+        entity.AddComponent(c1.Id, c1);
 
         Assert.False(entity.HasComponent(typeof(TestComponent)));
     }
@@ -97,7 +98,8 @@ public class Entity_Tests : IDisposable
     public void HasComponent_Type_False()
     {
         var entity = new newEntity();
-        entity.AddComponent(new Transform2DComponent());
+        var c1 = new Transform2DComponent();
+        entity.AddComponent(c1.Id, c1);
 
         Assert.False(entity.HasComponent<TestComponent>());
     }
@@ -106,7 +108,8 @@ public class Entity_Tests : IDisposable
     public void GetComponent()
     {
         var entity = new newEntity();
-        entity.AddComponent(new Transform2DComponent() { Rotation = 5.0f });
+        var c1 = new Transform2DComponent() { Rotation = 5.0f };
+        entity.AddComponent(c1.Id, c1);
 
         var component = entity.GetComponent<Transform2DComponent>();
         Assert.Equal(5.0f, component.Rotation);
@@ -115,6 +118,6 @@ public class Entity_Tests : IDisposable
     public void Dispose()
     {
         SceneSystem.Entities.Clear();
-        Transform2DSystem.Components.Clear();
+        Transform2DManager.Components.Clear();
     }
 }
