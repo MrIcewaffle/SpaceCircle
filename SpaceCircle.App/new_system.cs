@@ -18,11 +18,19 @@ public static class SceneSystem
         Entities.Add(id, entity);
     }
 
+    public static newEntity? GetEntity(Guid id)
+    {
+        if (Entities.ContainsKey(id))
+            return Entities[id];
+        else 
+            return null;
+    }
+
     public static void Update()
     { 
         float deltaTime = GetFrameTime();
         UpdateEntities(deltaTime);
-        UpdateComponents(deltaTime);
+        UpdateDrawables(deltaTime);
     }
 
     public static void UpdateEntities(float deltaTime)
@@ -31,7 +39,7 @@ public static class SceneSystem
             entity.Update(deltaTime);
     }
 
-    public static void UpdateComponents(float deltaTime)
+    public static void UpdateDrawables(float deltaTime)
     { 
         //Transform2DSystem.Update(delta)
     }
@@ -40,9 +48,11 @@ public static class SceneSystem
     {
         Entities.Remove(Id);
     }
-    public static void UnregisterEntity(newEntity entity)
+
+    public static void CleanScene()
     {
-        UnregisterEntity(entity.Id);
+        foreach (var entity in Entities.Values)
+            entity.Destroy();
     }
 }
 
@@ -76,6 +86,14 @@ public class newEntity
     {
         Components.Remove(component.GetType());
         HelperFunctions.UnregisterComponentFromManager(component);
+    }
+
+    public void RemoveAllComponents()
+    {
+        foreach (var component in Components.Values)
+            HelperFunctions.UnregisterComponentFromManager(component);
+        
+        Components.Clear();
     }
 
     public bool HasComponent(Type componentType)
@@ -114,6 +132,11 @@ public static class HelperFunctions
                 Transform2DSystem.Unregister(t1);
                 break;
         }   
+    }
+
+    public static void ClearComponentManagers()
+    {
+        Transform2DSystem.Components.Clear();
     }
 
 }
